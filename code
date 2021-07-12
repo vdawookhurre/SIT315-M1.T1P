@@ -1,0 +1,39 @@
+// C++ code
+//
+const int hot = 88; //set hot parameter
+const int cold = 20; //set cold parameter
+int pinTemp = A1;
+int redled = 13;
+int blueled = 7;  
+void setup() {
+pinMode(pinTemp, INPUT); //temp sensor
+pinMode(redled, OUTPUT); //red led
+pinMode(blueled, OUTPUT); //blue led
+
+Serial.begin(9600);
+}
+void loop() {
+int temp = analogRead(pinTemp);
+temp = temp * 0.48828125; // convert output (mv) to readable celcius
+Serial.print("temp: ");
+Serial.print(temp);
+Serial.println("C");  //print the temperature status
+  
+if (temp < cold) { //cold
+digitalWrite(blueled, HIGH);
+digitalWrite(redled, LOW);
+Serial.println(" It's too Cold.");
+}
+else if (temp >= hot) { //hot
+digitalWrite(blueled, LOW);
+digitalWrite(redled, HIGH);
+Serial.println(" It's too Hot.");
+}
+else { //fine
+digitalWrite(blueled, LOW);
+digitalWrite(redled, LOW);
+Serial.println(" It's Fine.");
+}
+
+delay(10);
+}
